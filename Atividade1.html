@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Rosa</title>
+    <style>
+        body {
+            background-color: #ffe6f2;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        h2 {
+            color: #ff66b2;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #ff66b2;
+        }
+
+        input, select, button {
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ff66b2;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #ff66b2;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e64d8e;
+        }
+
+        p {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #ff66b2;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #ff66b2;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ff66b2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Calculadora</h2>
+
+    <label for="num1">Número 1:</label>
+    <input type="text" id="num1">
+
+    <label for="operator">Operação:</label>
+    <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+
+    <label for="num2">Número 2:</label>
+    <input type="text" id="num2">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <p>Resultado: <span id="resultado"></span></p>
+
+    <table id="historico">
+        <thead>
+            <tr>
+                <th>Número 1</th>
+                <th>Operação</th>
+                <th>Número 2</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aqui serão adicionadas as linhas da tabela dinamicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        function calcular() {
+            // Obter os valores dos campos de entrada
+            var num1 = parseFloat(document.getElementById("num1").value);
+            var num2 = parseFloat(document.getElementById("num2").value);
+            var operador = document.getElementById("operator").value;
+
+            // Verificar se os valores são válidos
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Por favor, insira números válidos.");
+                return;
+            }
+
+            // Realizar a operação selecionada
+            var resultado;
+            switch (operador) {
+                case "+":
+                    resultado = num1 + num2;
+                    break;
+                case "-":
+                    resultado = num1 - num2;
+                    break;
+                case "*":
+                    resultado = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 !== 0) {
+                        resultado = num1 / num2;
+                    } else {
+                        alert("Não é possível dividir por zero.");
+                        return;
+                    }
+                    break;
+                default:
+                    alert("Operação inválida.");
+                    return;
+            }
+
+            // Exibir o resultado
+            document.getElementById("resultado").textContent = resultado;
+            // Adicionar uma nova linha à tabela de histórico
+            var historicoTable = document.getElementById("historico").getElementsByTagName('tbody')[0];
+            var newRow = historicoTable.insertRow(historicoTable.rows.length);
+
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+
+            cell1.innerHTML = num1;
+            cell2.innerHTML = operador;
+            cell3.innerHTML = num2;
+            cell4.innerHTML = resultado;
+        }
+    </script>
+
+</body>
+</html
